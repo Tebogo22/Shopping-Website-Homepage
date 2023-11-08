@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Shopping Website</title>
+</head>
+<body>
+	<main>
+
+		<form id="main-form">
+
+			<div class="products-search-sort">
+
+				<div class="product-search">
+					<div id="product-num">
+						<label id="products-found">Products found:</label>
+						<p id="num-products"></p>
+					</div>
+					<div id="search">
+						<input type="text" id="searched-product" placeholder="Search for items in this list">
+						<button id="search-icon-button">Search</button>
+					</div>
+				</div>
+
+				<div class="sort">
+					<label>Sort By:</label>
+					<select id="select-sort">
+						<option class = "option">Select</option>
+						<option class = "option">Name A-Z</option>
+						<option class = "option">Category A-Z</option>
+						<option class = "option"> Price: Low-High</option>
+						<option class = "option">Price: High-Low</option>
+					</select>
+				</div>
+			
+			</div>
+
+			<!-- Display block on mobile -->
+				<div class="mobile-design">
+
+					<div class="filter-sort-container">
+						<div class="mobile-filter">
+							<button id="fltr-btn">Filter</button>
+						</div>
+						<div class="mobile-sort">
+							<button id="sort-btn">Sort By</button>
+						</div>
+					</div>
+
+					<div id="mobile-product-num">
+						<label id='mobile-pro-label'>
+							Products found:
+						</label>
+						<p id="mobile-pro-num"></p>
+					</div>
+
+				</div>
+			<!-- Display block--^---on mobile -->
+
+			<div class="category-products">
+				<div class="category-selector">
+					<select id="categories">
+						<option>Categories</option>
+					</select>
+					
+					<div class="category">
+						<label>
+							<input type="checkbox" id="checkbox-a">
+							Category A
+						</label>
+						<p id="cat-a-quant">4</p>
+					</div>
+
+					<div class="category">
+						<label>
+							<input type="checkbox" id="checkbox-b">
+							Category B
+						</label>
+						<p id="cat-b-quant">6</p>
+					</div>
+
+					<div class="category">
+						<label>
+							<input id="checkbox-c" type="checkbox">
+							Category C
+						</label>
+						<p id="cat-c-quant">2</p>
+					</div>
+				</div>
+
+				<div class="product-seletor">
+				</div> 
+
+			</div>
+			
+		</form>
+		
+	</main>
+
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
