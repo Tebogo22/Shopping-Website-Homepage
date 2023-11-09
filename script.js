@@ -1,18 +1,18 @@
 //When the page first loads without any filters/sorting
 const products = document.querySelector('.product-seletor')
 
-const productObjs = [{title: 'product1 - (1).PNG', name: 'Product', category: 'Category A', price: '$50000.00'},
-					{title: 'product1 - (2).PNG', name: 'T-Shirt', category: 'Category A', price: '$399.00'},
-					{title: 'product1 - (3).PNG', name: 'Men Shorts', category: 'Category A', price: '$600.00'},
-					{title: 'product1 - (4).PNG', name: 'Nike Sneakers', category: 'Category A', price: '$900.00'},
-					{title: 'product1 - (5).PNG', name: 'Smart TV', category: 'Category B', price: '$7000.00'},
-					{title: 'product1 - (6).PNG', name: 'BD Speaker', category: 'Category B',price: '$3000.00'},
-					{title: 'product1 - (7).PNG', name: 'JBL Headphones', category: 'Category B',price: '$490.00'},
-					{title: 'product1 - (8).PNG', name: 'Product Name', category: 'Category B',price: '$5700.00'},
+const productObjs = [{title: 'product1 - (1).PNG', name: 'Product', category: 'Category A', price: '$5639.99'},
+					{title: 'product1 - (2).PNG', name: 'T-Shirt', category: 'Category A', price: '$389.99'},
+					{title: 'product1 - (3).PNG', name: 'Men Shorts', category: 'Category A', price: '$599.99'},
+					{title: 'product1 - (4).PNG', name: 'Nike Sneakers', category: 'Category A', price: '$899.89'},
+					{title: 'product1 - (5).PNG', name: 'Smart TV', category: 'Category B', price: '$6999.95'},
+					{title: 'product1 - (6).PNG', name: 'BD Speaker', category: 'Category B',price: '$2999.99'},
+					{title: 'product1 - (7).PNG', name: 'JBL Headphones', category: 'Category B',price: '$490'},
+					{title: 'product1 - (8).PNG', name: 'Product Name', category: 'Category B',price: '$5700.99'},
 					{title: 'product1 - (9).PNG', name: 'Phone Cover', category: 'Category B',price: '$8.99'},
-					{title: 'product1 - (10).PNG', name: 'Screen Protector', category: 'Category B',price: '$5.00'},
+					{title: 'product1 - (10).PNG', name: 'Screen Protector', category: 'Category B',price: '$5.45'},
 					{title: 'product1 - (11).PNG', name: 'Cheap Headsets', category: 'Category C',price: '$4.99'},
-					{title: 'product1 - (12).PNG', name: 'AUX Cable', category: 'Category C',price: '$30.000'}
+					{title: 'product1 - (12).PNG', name: 'AUX Cable', category: 'Category C',price: '$29.99'}
 				]
 
 //Counting number of products
@@ -113,7 +113,36 @@ function productOptionArray(option){
 //Storing product's category, prize and name in an array which will be used to sort
 const productCategoryArray = productOptionArray('category')
 const productNameArray = productOptionArray('name')
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const productPriceArray = productOptionArray('price')
+/*A method that sorts the array in ascending order if ascOrNot = true and in descending order if ascOrNot = false*/
+function sortPriceArray(priceArrayToSort, ascOrNot){
+	let numArr = []
+	let newSortedPrizeArray = []
+
+	for(let i = 0; i < priceArrayToSort.length; i++){
+		//First get the price in the array
+		let arrayInPrice = priceArrayToSort[i]
+		//Splice its first character '$' so that we are left with only numbers
+		arrayInPrice = arrayInPrice.slice(1)
+		//Convert the numbers to a Float after taking out the '$' sign and push the value into an array
+		numArr.push(parseFloat(arrayInPrice))
+	}
+
+	if(ascOrNot == true){
+		numArr.sort((a, b) => a - b)
+	}else{
+		numArr.sort((a, b) => b - a)
+	}
+
+	for(let c = 0; c < numArr.length; c++){
+		newSortedPrizeArray.push('$' + numArr[c])
+	}
+
+	return newSortedPrizeArray
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Working on the select element for the Sort By option
 const selectSortBy = document.querySelector('#select-sort')
@@ -121,39 +150,38 @@ selectSortBy.addEventListener('change', (e) => sortByFunc())
 
 function sortByFunc(){
 	let sortByHTML = ''
-	let typeOfSort = ''
 
 	if(selectSortBy.value === 'Name A-Z'){
 
 		let sortedNameArray = productNameArray.sort()
-		displayBySort(sortedNameArray, sortByHTML, productObjs, productObjs.name)
+		displayBySort(sortedNameArray, sortByHTML, productObjs)
 
 	}else if(selectSortBy.value === 'Category A-Z'){
 
 		let sortedCategoryArray = productCategoryArray.sort()
-		typeOfSort = 'category'
-		displayBySort(sortedCategoryArray, sortByHTML, productObjs, typeOfSort[1])
+		console.log(sortedCategoryArray)
+		displayBySort(sortedCategoryArray, sortByHTML, productObjs)
 
 	}else if(selectSortBy.value === 'Price: Low-High'){
 
-		let sortedPrizeArray = productPriceArray.sort()
-		typeOfSort = 'price'
-		displayBySort(sortedPrizeArray, sortByHTML, productObjs, typeOfSort[1])
+		let ascendingPriceArray = sortPriceArray(productPriceArray, true)
+		displayBySort(ascendingPriceArray, sortByHTML, productObjs)
 
 	}else if(selectSortBy.value === 'Price: High-Low'){
 
-		let sortedReversedPrizeArray = productPriceArray.sort().reverse()
-		typeOfSort = 'price'
-		displayBySort(sortedReversedPrizeArray, sortByHTML, productObjs, typeOfSort[1])
+		let descendingPrizeArray = sortPriceArray(productPriceArray, false)
+		console.log(descendingPrizeArray)
+		displayBySort(descendingPrizeArray, sortByHTML, productObjs)
 	}
 }
 
 //FUnction that displays to the DOM by type of sort
-function displayBySort(typeOfArray, htmlHolder, myObjectArray, sortOption){
+function displayBySort(typeOfArray, htmlHolder, myObjectArray){
 
 		for(let i = 0; i < typeOfArray.length; i++){
 				for(let c = 0; c < typeOfArray.length; c++){
-					if(typeOfArray[i] == myObjectArray[c].sortOption){
+					if((typeOfArray[i] == myObjectArray[c].name) || (typeOfArray[i] == myObjectArray[c].category) || (typeOfArray[i] == myObjectArray[c].price)){
+
 						htmlHolder += `<div class="my-product">
 											<img src="./products/${myObjectArray[c].title}">
 											<p class="product-name">${myObjectArray[c].name}</p>
